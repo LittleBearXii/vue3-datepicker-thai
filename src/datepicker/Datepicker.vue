@@ -296,22 +296,32 @@ export default defineComponent({
     const isFocused = ref(false)
 
     const input = ref('')
-    watchEffect(() => {
-      const parsed = parse(input.value, props.inputFormat, new Date(), {
+
+    const convertToBuddhistYear = (date: Date, formatString: string) => {
+      const year = date.getFullYear()
+      const buddhistYear = year + 543
+      const formattedDate = format(date, formatString.replace('yyyy', buddhistYear.toString()), {
         locale: props.locale,
       })
-      if (isValid(parsed)) {
-        pageDate.value = parsed
-      }
-    })
+      return formattedDate
+    }
+
+    const converBuddhistYear = (date: Date, formatString: string) => {
+      return props.isBuddhistYear ? convertToBuddhistYear(date, formatString) : format(date, formatString, { locale: props.locale })
+    }
+
+    // watchEffect(() => {
+    //   const parsed = parse(input.value, props.inputFormat, new Date())
+    //   if (isValid(parsed)) {
+    //     pageDate.value = parsed
+    //   }
+    // })
 
     watchEffect(
       () =>
         (input.value =
           props.modelValue && isValid(props.modelValue)
-            ? format(props.modelValue, props.inputFormat, {
-                locale: props.locale,
-              })
+            ? converBuddhistYear(props.modelValue, props.inputFormat)
             : '')
     )
 

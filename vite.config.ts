@@ -13,7 +13,7 @@ export default defineConfig({
       name: 'Datepicker',
       formats: ['es', 'umd'],
       // the proper extensions will be added
-      fileName: 'vue3-datepicker',
+      fileName: 'vue3-datepicker-support-thai-year',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
