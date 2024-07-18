@@ -75,6 +75,11 @@ export default defineComponent({
       type: Date as PropType<Date>,
       required: false,
     },
+    isBuddhistYear: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const from = computed(() => startOfYear(props.pageDate))
@@ -113,7 +118,11 @@ export default defineComponent({
       )
     )
 
-    const heading = computed(() => getYear(from.value))
+    const getBuddhistYear = (year: Date) => {
+      return props.isBuddhistYear ? getYear(year) + 543 : getYear(year)
+    }
+
+    const heading = computed(() => getBuddhistYear(from.value))
 
     const leftDisabled = computed(
       () =>
