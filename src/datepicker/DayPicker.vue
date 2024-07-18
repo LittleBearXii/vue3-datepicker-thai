@@ -45,6 +45,7 @@ import {
   format as formatDate,
 } from 'date-fns'
 import PickerPopup, { Item } from './PickerPopup.vue'
+import { format as fnsFormat } from 'date-fns'
 
 export default defineComponent({
   components: {
@@ -192,20 +193,19 @@ export default defineComponent({
       )
     })
 
-    const convertToBuddhistYear = (dateString: string) => {
-      const [month, year] = dateString.split(' ')
-      const buddhistYear = parseInt(year) + 543
-
-      return `${month} ${buddhistYear}`
+    const convertToBuddhistYear = (date: Date, formatString: string) => {
+      const year = date.getFullYear()
+      const buddhistYear = year + 543
+      const formattedDate = fnsFormat(date, formatString.replace('yyyy', buddhistYear.toString()))
+      return formattedDate
     }
-
+    
     const heading = computed(() => {
       return props.isBuddhistYear
-        ? convertToBuddhistYear(
-            format.value(props.headingFormat)(props.pageDate)
-          )
+        ? convertToBuddhistYear(props.pageDate, props.headingFormat)
         : format.value(props.headingFormat)(props.pageDate)
     })
+
     const leftDisabled = computed(
       () =>
         props.lowerLimit &&
