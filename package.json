@@ -30,8 +30,8 @@
     "calendar",
     "date-fns"
   ],
-  "main": "dist/vue3-datepicker-support-thai-year.cjs.js",
-  "module": "dist/vue3-datepicker-support-thai.esm.js",
+  "main": "dist/vue3-datepicker-support-thai-year.umd.js",
+  "module": "dist/vue3-datepicker-support-thai.mjs",
   "types": "./dist/types/Datepicker.vue.d.ts",
   "files": [
     "src/datepicker",
@@ -40,7 +40,7 @@
   "scripts": {
     "dev": "vite",
     "dev:docs": "vitepress dev docs",
-    "build:component": "rollup -c rollup.config.js",
+    "build:component": "vite build",
     "build:docs": "vitepress build docs",
     "preview:docs": "vitepress preview docs",
     "format": "prettier -w ."
@@ -56,11 +56,7 @@
     "vite-plugin-css-injected-by-js": "^3.1.1",
     "vite-plugin-dts": "^2.3.0",
     "vitepress": "^1.0.0-beta.1",
-    "vue": "^3.3.4",
-    "rollup": "^2.52.6",
-    "rollup-plugin-postcss": "^4.0.0",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-vue": "^6.0.0"
+    "vue": "^3.3.4"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
