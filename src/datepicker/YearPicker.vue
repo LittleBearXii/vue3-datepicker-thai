@@ -54,6 +54,11 @@ export default defineComponent({
       type: Date as PropType<Date>,
       required: false,
     },
+    isBuddhistYear: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const from = computed(() => startOfDecade(props.pageDate))
@@ -65,8 +70,10 @@ export default defineComponent({
       upper: Date | undefined
     ): boolean => {
       if (!lower && !upper) return true
-      if (lower && getYear(target) < getYear(lower)) return false
-      if (upper && getYear(target) > getYear(upper)) return false
+      if (lower && getBuddhistYear(target) < getBuddhistYear(lower))
+        return false
+      if (upper && getBuddhistYear(target) > getBuddhistYear(upper))
+        return false
       return true
     }
 
@@ -77,18 +84,23 @@ export default defineComponent({
       }).map(
         (value): Item => ({
           value,
-          key: String(getYear(value)),
-          display: getYear(value),
+          key: String(getBuddhistYear(value)),
+          display: getBuddhistYear(value),
           selected:
-            !!props.selected && getYear(value) === getYear(props.selected),
+            !!props.selected &&
+            getBuddhistYear(value) === getBuddhistYear(props.selected),
           disabled: !isEnabled(value, props.lowerLimit, props.upperLimit),
         })
       )
     )
 
+    const getBuddhistYear = (year: Date) => {
+      return props.isBuddhistYear ? getYear(year) + 543 : getYear(year)
+    }
+
     const heading = computed(() => {
-      const start = getYear(from.value)
-      const end = getYear(to.value)
+      const start = getBuddhistYear(from.value)
+      const end = getBuddhistYear(to.value)
 
       return `${start} - ${end}`
     })

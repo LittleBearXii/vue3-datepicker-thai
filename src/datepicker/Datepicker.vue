@@ -32,6 +32,7 @@
       :lowerLimit="lowerLimit"
       :upperLimit="upperLimit"
       @select="selectYear"
+      :isBuddhistYear="isBuddhistYear"
     />
     <month-picker
       v-show="viewShown === 'month'"
@@ -44,6 +45,7 @@
       :format="monthListFormat"
       :locale="locale"
       @back="viewShown = 'year'"
+      :isBuddhistYear="isBuddhistYear"
     />
     <day-picker
       v-show="viewShown === 'day'"
@@ -61,6 +63,7 @@
       :format="dayFormat"
       @select="selectDay"
       @back="viewShown = 'month'"
+      :isBuddhistYear="isBuddhistYear"
     />
     <time-picker
       v-show="viewShown === 'time'"
@@ -270,6 +273,11 @@ export default defineComponent({
       default: 'day',
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
+    },
+    isBuddhistYear: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      default: false,
     },
   },
   emits: {

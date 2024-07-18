@@ -110,6 +110,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    isBuddhistYear: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const format = computed(
@@ -187,9 +192,20 @@ export default defineComponent({
       )
     })
 
-    const heading = computed(() =>
-      format.value(props.headingFormat)(props.pageDate)
-    )
+    const convertToBuddhistYear = (dateString: string) => {
+      const [month, year] = dateString.split(' ')
+      const buddhistYear = parseInt(year) + 543
+
+      return `${month} ${buddhistYear}`
+    }
+
+    const heading = computed(() => {
+      return props.isBuddhistYear
+        ? convertToBuddhistYear(
+            format.value(props.headingFormat)(props.pageDate)
+          )
+        : format.value(props.headingFormat)(props.pageDate)
+    })
     const leftDisabled = computed(
       () =>
         props.lowerLimit &&
@@ -215,6 +231,7 @@ export default defineComponent({
       rightDisabled,
       previousPage,
       nextPage,
+      convertToBuddhistYear,
     }
   },
 })
