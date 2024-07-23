@@ -196,7 +196,9 @@ export default defineComponent({
     const convertToBuddhistYear = (date: Date, formatString: string) => {
       const year = date.getFullYear()
       const buddhistYear = year + 543
-      const formattedDate = fnsFormat(date, formatString.replace('yyyy', buddhistYear.toString()))
+      const formattedDate = fnsFormat(date, formatString.replace('yyyy', buddhistYear.toString()), {
+        locale: props.locale,
+      })
       return formattedDate
     }
     

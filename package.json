@@ -16,7 +16,7 @@
   },
   "private": false,
   "name": "vue3-datepicker-support-thai-year",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "publishConfig": {
     "access": "public"
   },
